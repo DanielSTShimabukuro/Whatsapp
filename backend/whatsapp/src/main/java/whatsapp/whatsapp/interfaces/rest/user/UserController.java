@@ -2,7 +2,6 @@ package whatsapp.whatsapp.interfaces.rest.user;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +26,10 @@ public class UserController {
     private final GetUserByUserTagUseCase getUserByUserTagUseCase;
     private final GetUsersByUsernameUseCase getUsersByUsernameUseCase;
 
+    private final UpdateUserTagUseCase updateUserTagUseCase;
+    private final UpdateUsernameUseCase updateUsernameUseCase;
+    private final UpdatePasswordUseCase updatePasswordUseCase;
+
     private final DeleteUserByIdUseCase deleteUserByIdUseCase;
 
     // --- Rotas HTTP --- //
@@ -47,6 +50,7 @@ public class UserController {
     // --- GET ALL --- //
     @GetMapping
     public ResponseEntity<List<PartialUserResponse>> getAll() {
+        // Aviso: Talvez seja interessante tratar da paginação aqui
         List<User> foundUsers = getAllUsersUseCase.execute();
 
         return ResponseEntity.ok().body(
@@ -77,6 +81,7 @@ public class UserController {
     // --- GET BY username --- //
     @GetMapping(params = "username")
     public ResponseEntity<List<PartialUserResponse>> getByUsername(@PathVariable String username) {
+        // Aviso: Talvez seja interessante tratar da paginação aqui
         List<User> foundUsers = getUsersByUsernameUseCase.execute(username);
 
         return ResponseEntity.ok().body(
@@ -84,6 +89,27 @@ public class UserController {
                         .map(PartialUserResponse::from)
                         .toList()
         );
+    }
+
+    // --- PATCH userTag --- //
+    @PatchMapping("/{id}")
+    public ResponseEntity updateUserTag(@PathVariable UUID id, @RequestBody String userTag) {
+        updateUserTagUseCase.execute(id, userTag);
+        return ResponseEntity.noContent().build();
+    }
+
+    // --- PATCH username --- //
+    @PatchMapping("/{id}")
+    public ResponseEntity updateUsername(@PathVariable UUID id, @RequestBody String username) {
+        updateUsernameUseCase.execute(id, username);
+        return ResponseEntity.noContent().build();
+    }
+
+    // --- PATCH password --- //
+    @PatchMapping("/{id}")
+    public ResponseEntity updatePassword(@PathVariable UUID id, @RequestBody String password) {
+        updatePasswordUseCase.execute(id, password);
+        return ResponseEntity.noContent().build();
     }
 
     // --- DELETE --- //
