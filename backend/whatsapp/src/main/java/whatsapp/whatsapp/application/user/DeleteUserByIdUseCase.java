@@ -18,6 +18,7 @@ public class DeleteUserByIdUseCase {
     * */
     @Transactional
     public void execute(UUID id) {
+
         /*
         * Regra de Negócio: Pensar nas implicações de se excluir um usuário.
         * Por exemplo, o que iria acontecer com suas mensagens, ou, ele seria

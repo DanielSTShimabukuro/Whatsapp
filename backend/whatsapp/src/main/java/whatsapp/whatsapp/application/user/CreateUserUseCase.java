@@ -3,6 +3,7 @@ package whatsapp.whatsapp.application.user;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import whatsapp.whatsapp.application.exceptions.UserTagConflictException;
 import whatsapp.whatsapp.domain.user.User;
 import whatsapp.whatsapp.domain.user.UserRole;
 import whatsapp.whatsapp.infra.persistance.user.UserRepository;
@@ -25,7 +26,7 @@ public class CreateUserUseCase {
             UserRole userRole
     ) {
         if(repository.existsByUserTag(userTag)) {
-            // Aviso: tratar exceção de Conflito aqui...
+            throw new UserTagConflictException(userTag);
         }
 
         // Aviso: '@' como símbolo prefixador do campo userTag pode ser alterado por outro no futuro.

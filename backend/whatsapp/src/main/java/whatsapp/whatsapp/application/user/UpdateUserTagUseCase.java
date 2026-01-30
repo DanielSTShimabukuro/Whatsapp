@@ -3,6 +3,7 @@ package whatsapp.whatsapp.application.user;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import whatsapp.whatsapp.application.exceptions.UserNotFoundException;
 import whatsapp.whatsapp.domain.user.User;
 import whatsapp.whatsapp.infra.persistance.user.UserRepository;
 
@@ -16,8 +17,7 @@ public class UpdateUserTagUseCase {
 
     @Transactional
     public void execute(UUID id, String userTag) {
-        // Aviso: aprimorar tratamento de erro caso não encontre Usuário
-        User user = repository.findById(id).orElseThrow();
+        User user = repository.findById(id).orElseThrow(()-> new UserNotFoundException());
 
         if(!userTag.matches("^@")) {
             userTag = "@" + userTag;
