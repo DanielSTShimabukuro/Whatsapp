@@ -63,8 +63,7 @@ public class UserController {
     // --- GET BY id --- //
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getById(@PathVariable UUID id) {
-        // Aviso: Qnd criar tratamento de erro global, aprimorar o lançamento de erro aqui
-        User foundUser = getUserByIdUseCase.execute(id).orElseThrow();
+        User foundUser = getUserByIdUseCase.execute(id);
 
         return ResponseEntity.ok().body(UserResponse.from(foundUser));
     }
@@ -72,8 +71,7 @@ public class UserController {
     // --- GET BY userTag --- //
     @GetMapping(params = "userTag")
     public ResponseEntity<UserResponse> getById(@RequestParam String userTag) {
-        // Aviso: Qnd criar tratamento de erro global, aprimorar o lançamento de erro aqui
-        User foundUser = getUserByUserTagUseCase.execute(userTag).orElseThrow();
+        User foundUser = getUserByUserTagUseCase.execute(userTag);
 
         return ResponseEntity.ok().body(UserResponse.from(foundUser));
     }

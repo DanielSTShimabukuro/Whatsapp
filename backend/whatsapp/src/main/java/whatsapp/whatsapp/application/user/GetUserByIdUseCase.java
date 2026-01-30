@@ -2,10 +2,10 @@ package whatsapp.whatsapp.application.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import whatsapp.whatsapp.application.exceptions.UserNotFoundException;
 import whatsapp.whatsapp.domain.user.User;
 import whatsapp.whatsapp.infra.persistance.user.UserRepository;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -13,12 +13,7 @@ import java.util.UUID;
 public class GetUserByIdUseCase {
     private final UserRepository repository;
 
-    public Optional<User> execute(UUID id) {
-        /*
-        * Aviso: pensar em tratar erro caso não exista nenhum usuário
-        * cujo ID corresponde ao passado pelo parâmetro.
-        * */
-
-        return repository.findById(id);
+    public User execute(UUID id) {
+        return repository.findById(id).orElseThrow(() -> new UserNotFoundException());
     }
 }
