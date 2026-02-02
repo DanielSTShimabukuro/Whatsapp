@@ -90,21 +90,21 @@ public class UserController {
     }
 
     // --- PATCH userTag --- //
-    @PatchMapping("/{id}")
+    @PatchMapping("/{id}/edit/usertag")
     public ResponseEntity updateUserTag(@PathVariable UUID id, @RequestBody String userTag) {
         updateUserTagUseCase.execute(id, userTag);
         return ResponseEntity.noContent().build();
     }
 
     // --- PATCH username --- //
-    @PatchMapping("/{id}")
+    @PatchMapping("/{id}/edit/username")
     public ResponseEntity updateUsername(@PathVariable UUID id, @RequestBody String username) {
         updateUsernameUseCase.execute(id, username);
         return ResponseEntity.noContent().build();
     }
 
     // --- PATCH password --- //
-    @PatchMapping("/{id}")
+    @PatchMapping("/{id}/edit/password")
     public ResponseEntity updatePassword(@PathVariable UUID id, @RequestBody String password) {
         updatePasswordUseCase.execute(id, password);
         return ResponseEntity.noContent().build();
