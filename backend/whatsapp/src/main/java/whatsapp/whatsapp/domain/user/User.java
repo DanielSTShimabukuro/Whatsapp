@@ -36,7 +36,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    // Vai servir no lugar do e-mail
     @Setter
     @Column(nullable = false, unique = true)
     private String userTag;
@@ -61,10 +60,8 @@ public class User {
     private Set<Group> groups = new HashSet<>();
 
     @CreationTimestamp
-    @Column(updatable = false)
     private LocalDateTime createdAt;
 
-    @Setter
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
